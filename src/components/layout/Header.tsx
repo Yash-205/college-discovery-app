@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Menu, LogOut, User } from "lucide-react";
+import { Menu, LogOut, User, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -47,8 +47,13 @@ export function Header() {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between max-w-7xl">
         {/* Logo */}
         <div className="flex items-center gap-12">
-          <Link href="/" className="text-2xl font-black text-blue-600 tracking-tight">
-            COLLEGEFIND
+          <Link href="/" className="inline-flex items-center gap-2.5 group">
+            <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md shadow-indigo-200 group-hover:bg-indigo-500 transition-colors">
+              <GraduationCap className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-xl font-black text-slate-900 tracking-tight">
+              College<span className="text-indigo-600">Find</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -91,9 +96,6 @@ export function Header() {
             </Link>
           )}
 
-          <Button variant="ghost" size="icon" className="text-slate-600 hover:text-blue-600">
-            <Search className="w-5 h-5" />
-          </Button>
 
           <Button variant="ghost" size="icon" className="md:hidden text-slate-600">
             <Menu className="w-6 h-6" />
