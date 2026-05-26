@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { FilterBar } from "@/components/colleges/FilterBar";
 import { apiClient } from "@/lib/apiClient";
@@ -15,7 +15,7 @@ import { useSearchParams } from "next/navigation";
 
 const MAX_COMPARE = 4;
 
-export default function CollegesPage() {
+function CollegesPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -215,5 +215,18 @@ export default function CollegesPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CollegesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center gap-3">
+        <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
+        <p className="text-slate-400 text-sm">Preparing colleges...</p>
+      </div>
+    }>
+      <CollegesPageContent />
+    </Suspense>
   );
 }

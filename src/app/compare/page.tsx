@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import {
@@ -24,7 +24,7 @@ interface College {
 
 const MAX = 4;
 
-export default function ComparePage() {
+function ComparePageContent() {
   const router       = useRouter();
   const searchParams = useSearchParams();
 
@@ -390,5 +390,18 @@ export default function ComparePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center gap-3">
+        <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
+        <p className="text-slate-400 text-sm">Preparing comparison...</p>
+      </div>
+    }>
+      <ComparePageContent />
+    </Suspense>
   );
 }
