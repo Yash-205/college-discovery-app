@@ -4,16 +4,33 @@ import prisma from '@/lib/prisma';
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const search = searchParams.get('search') || '';
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const search = searchParams.get('search');
+    const location = searchParams.get('location');
+    const maxFee = searchParams.get('maxFee');
+    const sortBy = searchParams.get('sortBy');
+    const limit = parseInt(searchParams.get('limit') || '20');
     
+    const whereClause: any = {};
+    if (search) {
+      whereClause.name = { contains: search, mode: 'insensitive' };
+    }
+    if (location) {
+      whereClause.location = { contains: location, mode: 'insensitive' };
+    }
+    if (maxFee) {
+      whereClause.fees = { lte: parseInt(maxFee) };
+    }
+
+    let orderByClause: any = { createdAt: 'desc' };
+    if (sortBy === 'rating') {
+      orderByClause = { rating: 'desc' };
+    } else if (sortBy === 'fees') {
+      orderByClause = { fees: 'asc' };
+    }
+
     const colleges = await prisma.college.findMany({
-      where: search ? {
-        name: {
-          contains: search,
-          mode: 'insensitive'
-        }
-      } : undefined,
+      where: whereClause,
+      orderBy: orderByClause,
       take: limit,
     });
     

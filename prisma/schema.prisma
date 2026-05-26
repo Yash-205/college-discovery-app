@@ -10,8 +10,12 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
+  name          String?
   passwordHash  String
+  avatar        String?
   savedColleges College[] // Many-to-many relation
+  discussions   Discussion[]
+  answers       Answer[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -23,10 +27,36 @@ model College {
   fees       Float
   rating     Float
   overview   String?
+  imageUrl   String?
   courses    String[] 
   placements String?
   reviews    String[]
   savedBy    User[]   
+  discussions Discussion[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Discussion {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  collegeId String?  
+  college   College? @relation(fields: [collegeId], references: [id])
+  answers   Answer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Answer {
+  id           String     @id @default(cuid())
+  body         String
+  authorId     String
+  author       User       @relation(fields: [authorId], references: [id])
+  discussionId String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }

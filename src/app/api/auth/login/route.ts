@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export async function POST(req: Request) {
   try {
+    // Reloaded route to pick up schema updates
     const { email, password } = await req.json();
 
     if (!email || !password) {
@@ -22,7 +23,16 @@ export async function POST(req: Request) {
     }
 
     const secret = process.env.NEXTAUTH_SECRET || 'fallback_secret';
-    const token = jwt.sign({ userId: user.id, email: user.email }, secret, { expiresIn: '7d' });
+    const token = jwt.sign(
+      { 
+        userId: user.id, 
+        email: user.email,
+        name: user.name || '',
+        avatar: user.avatar || ''
+      }, 
+      secret, 
+      { expiresIn: '7d' }
+    );
 
     return NextResponse.json({ message: 'Login successful', token, userId: user.id }, { status: 200 });
   } catch (error: any) {

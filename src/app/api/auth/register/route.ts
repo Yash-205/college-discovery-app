@@ -4,7 +4,8 @@ import bcrypt from 'bcryptjs';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    // Reloaded route to pick up schema updates
+    const { email, password, name, avatar } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });
@@ -22,6 +23,8 @@ export async function POST(req: Request) {
       data: {
         email,
         passwordHash,
+        name: name || null,
+        avatar: avatar || null,
       }
     });
 
