@@ -29,26 +29,26 @@ export function HeroSearch() {
       <div className="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row items-center gap-12">
         {/* Left Column: Text & Search */}
         <div className="flex-1 space-y-8 z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1.05]">
             Find colleges,<br />
             courses, & exams
           </h1>
-          <p className="text-lg text-slate-500 max-w-md leading-relaxed font-medium">
-            Exploring Higher Education: Discovering Colleges, Courses, and Exams to Shape Your Future
+          <p className="text-xl text-slate-500 max-w-lg leading-relaxed font-medium">
+            Explore higher education with ease. Discover thousands of colleges, courses, and exams to shape your future.
           </p>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="flex items-center bg-white border border-slate-200 rounded-full p-2 shadow-xl shadow-slate-200/50 max-w-xl">
+          <form onSubmit={handleSearch} className="flex items-center bg-white border-2 border-slate-100 rounded-full p-2.5 shadow-2xl shadow-blue-900/5 max-w-xl hover:border-blue-200 focus-within:border-blue-400 focus-within:shadow-blue-900/10 transition-all duration-300">
             <input 
               type="text" 
-              placeholder="Search From 1000+ Colleges, Courses, Exams..." 
+              placeholder="Search from 1,000+ colleges and courses..." 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent border-none outline-none text-slate-800 placeholder:text-slate-400 px-6 text-sm py-2"
+              className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder:text-slate-400 px-6 text-base py-3 font-medium"
             />
-            <Button type="submit" size="icon" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-12 h-12 shadow-md shadow-blue-600/20 shrink-0">
-              <Search className="w-5 h-5" />
+            <Button type="submit" size="icon" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-14 h-14 shadow-lg shadow-blue-600/30 shrink-0 group">
+              <Search className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
             </Button>
           </form>
         </div>
@@ -63,11 +63,11 @@ export function HeroSearch() {
           </div>
           
           {/* Portrait Image */}
-          <div className="relative z-10 w-[350px] h-[350px] rounded-full border-[6px] border-white shadow-2xl overflow-hidden mt-8">
+          <div className="relative z-10 w-[380px] h-[380px] rounded-[3rem] rotate-3 hover:rotate-0 transition-transform duration-700 border-8 border-white shadow-2xl overflow-hidden mt-8">
             <img 
-              src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800" 
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800" 
               alt="Happy Student" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700"
             />
           </div>
         </div>

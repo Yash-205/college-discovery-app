@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, LogOut, User, GraduationCap } from "lucide-react";
+import { Menu, LogOut, GraduationCap, ChevronDown, Building, Map, GraduationCap as Cap, BookOpen, Users, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -57,10 +57,76 @@ export function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/colleges" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Colleges</Link>
-            <Link href="/compare" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Compare</Link>
-            <Link href="/discussions" className="text-sm font-semibold text-slate-800 hover:text-blue-600 transition-colors">Discussions</Link>
+          <nav className="hidden md:flex items-center gap-1">
+            {/* Dropdown: College Search */}
+            <div className="relative group px-3 py-2">
+              <button className="flex items-center gap-1 text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                College Search <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors group-hover:rotate-180 duration-300" />
+              </button>
+              
+              {/* Dropdown Menu */}
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50">
+                <div className="p-3 flex flex-col gap-1">
+                  <Link href="/colleges" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">
+                      <Building className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">All Colleges</div>
+                      <div className="text-xs text-slate-500 font-medium">Search by cost & major</div>
+                    </div>
+                  </Link>
+                  <Link href="/colleges?location=Mumbai" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
+                      <Map className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">By Location</div>
+                      <div className="text-xs text-slate-500 font-medium">Find colleges near you</div>
+                    </div>
+                  </Link>
+                  <Link href="/colleges" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center group-hover/item:bg-amber-600 group-hover/item:text-white transition-colors">
+                      <Trophy className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">Top Rated</div>
+                      <div className="text-xs text-slate-500 font-medium">Colleges by ranking</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Dropdown: Guidance */}
+            <div className="relative group px-3 py-2">
+              <button className="flex items-center gap-1 text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">
+                Guidance <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors group-hover:rotate-180 duration-300" />
+              </button>
+              
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50">
+                <div className="p-3 flex flex-col gap-1">
+                  <Link href="/discussions" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                    <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:bg-purple-600 group-hover/item:text-white transition-colors">
+                      <Users className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">Discussions</div>
+                      <div className="text-xs text-slate-500 font-medium">Real student voices</div>
+                    </div>
+                  </Link>
+                  <Link href="/compare" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover/item:bg-indigo-600 group-hover/item:text-white transition-colors">
+                      <BookOpen className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">Compare</div>
+                      <div className="text-xs text-slate-500 font-medium">Evaluate side-by-side</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </nav>
         </div>
 
@@ -68,9 +134,8 @@ export function Header() {
         <div className="flex items-center gap-6">
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
-              <div className="hidden sm:flex items-center gap-3 bg-slate-50 border border-slate-200/60 rounded-full pl-2 pr-4 py-1.5">
-                {/* Circular Profile Avatar or Letter Fallback */}
-                <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-600 text-white flex items-center justify-center text-sm font-bold shadow-inner border border-white">
+              <Link href="/profile" className="hidden sm:flex items-center gap-3 bg-slate-50 border border-slate-200/60 rounded-full pl-2 pr-4 py-1.5 hover:bg-slate-100 transition-colors cursor-pointer group">
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-600 text-white flex items-center justify-center text-sm font-bold shadow-inner border border-white group-hover:scale-105 transition-transform">
                   {avatar ? (
                     <img src={avatar} alt={displayName} className="w-full h-full object-cover" />
                   ) : (
@@ -78,22 +143,25 @@ export function Header() {
                   )}
                 </div>
                 <span className="text-xs font-bold text-slate-700">{displayName}</span>
-              </div>
-              <Button
+              </Link>
+              <button
                 onClick={handleLogout}
-                variant="outline"
-                className="border-red-200 hover:bg-red-50 text-red-600 rounded-full px-6 py-5 text-sm font-semibold"
+                className="text-sm font-semibold text-slate-500 hover:text-red-600 transition-colors px-3 py-2"
               >
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </Button>
+                Log Out
+              </button>
             </div>
           ) : (
-            <Link href="/login">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-5 text-sm font-semibold transition-all shadow-md shadow-blue-600/20">
-                Login
-              </Button>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link href="/login" className="hidden sm:block text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors px-3 py-2">
+                Log In
+              </Link>
+              <Link href="/register">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 py-5 text-sm font-bold transition-all shadow-[0_4px_14px_0_rgb(37,99,235,0.39)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] hover:-translate-y-0.5">
+                  Sign Up Free
+                </Button>
+              </Link>
+            </div>
           )}
 
 

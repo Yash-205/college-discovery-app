@@ -2,6 +2,9 @@ import prisma from '@/lib/prisma';
 import { Header } from '@/components/layout/Header';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { SaveCollegeButton } from "@/components/colleges/SaveCollegeButton";
 import {
   Star,
   MapPin,
@@ -22,6 +25,25 @@ export default async function CollegeDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  let isSaved = false;
+  try {
+    const cookieStore = await cookies();
+    const tokenCookie = cookieStore.get("token");
+    if (tokenCookie && tokenCookie.value) {
+      const secret = process.env.NEXTAUTH_SECRET || "fallback_secret";
+      const decoded: any = jwt.verify(tokenCookie.value, secret);
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.userId },
+        include: { savedColleges: { where: { id } } }
+      });
+      if (user && user.savedColleges.length > 0) {
+        isSaved = true;
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
 
   const college = await prisma.college.findUnique({
     where: { id },
@@ -84,22 +106,29 @@ export default async function CollegeDetailPage({
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                <h1 className="text-3xl font-extrabold leading-tight drop-shadow">
-                  {college.name}
-                </h1>
-                <div className="flex flex-wrap gap-4 mt-3 text-sm text-white/90">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin size={14} />
-                    {college.location}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Star size={14} className="fill-yellow-400 text-yellow-400" />
-                    {college.rating} / 5
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <IndianRupee size={14} />
-                    {college.fees.toLocaleString('en-IN')} / year
-                  </span>
+                <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+                  <div>
+                    <h1 className="text-3xl font-extrabold leading-tight drop-shadow">
+                      {college.name}
+                    </h1>
+                    <div className="flex flex-wrap gap-4 mt-3 text-sm text-white/90">
+                      <span className="flex items-center gap-1.5">
+                        <MapPin size={14} />
+                        {college.location}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                        {college.rating} / 5
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <IndianRupee size={14} />
+                        {college.fees.toLocaleString('en-IN')} / year
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <SaveCollegeButton collegeId={college.id} initialState={isSaved} />
+                  </div>
                 </div>
               </div>
             </div>

@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { apiClient } from "@/lib/apiClient";
-import { Camera, User, CheckCircle2, Loader2 } from "lucide-react";
+import { Camera, User, CheckCircle2, Loader2, GraduationCap } from "lucide-react";
+import { Header } from "@/components/layout/Header";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -64,11 +65,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-sans py-12">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 border border-slate-100">
-        <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-black text-blue-600 tracking-tight block mb-2">
-            COLLEGEFIND
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      <Header />
+      <div className="flex-grow flex items-center justify-center p-4 py-12">
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 border border-slate-100">
+        <div className="text-center mb-8 flex flex-col items-center">
+          <Link href="/" className="inline-flex items-center gap-2.5 group mb-8">
+            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 group-hover:bg-indigo-500 group-hover:scale-105 transition-all duration-300">
+              <GraduationCap className="w-7 h-7 text-white" />
+            </div>
+            <span className="text-3xl font-black text-slate-900 tracking-tight">
+              College<span className="text-indigo-600">Find</span>
+            </span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Create an account</h1>
           <p className="text-slate-500 text-sm mt-2">Sign up to start saving and comparing colleges</p>
@@ -167,6 +175,7 @@ export default function RegisterPage() {
             Log in
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );

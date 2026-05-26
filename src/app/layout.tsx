@@ -11,11 +11,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "CollegeFind — Discover Your Perfect College",
+    default: "College Planning Made Simple: College Search, Courses & Exams | CollegeFind",
     template: "%s | CollegeFind",
   },
   description:
-    "Search, compare, and discover the best colleges across India. Filter by location, fees, ratings, and more. Read real student discussions and reviews.",
+    "Search colleges by fees, location, and courses. On CollegeFind, you can start your search, build your shortlist, compare options, and read real student discussions in one place.",
   keywords: [
     "college search India",
     "compare colleges",
